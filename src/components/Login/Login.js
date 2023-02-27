@@ -11,6 +11,18 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
+  useEffect(()=> { // if no dependencies given, useEffect will run everytime the component function re-runs
+    console.log('EFFECT RUNNING - NO DEPENDENCIES GIVEN');
+  });
+
+  useEffect(()=> { // if empty array given for the dependencies parameter, useEffect will run for only the *first* time the component is rendered
+    console.log('EFFECT RUNNING - EMPTY ARRAY FOR DEPENDENCIES');
+  }, []);
+
+  useEffect(()=> { // if an array containing any dependencies is given as a parameter, useEffect will run the *first* time the component is rendered AND any time the state of the specified dependency changes
+    console.log('EFFECT RUNNING - DEPENDENCY FOR PASSWORD GIVEN');
+  }, [enteredPassword]);
+
   useEffect(() => { // use whenever you have an action that should be executed in response to some other action
     const identifier = setTimeout(()=> { // *debouncing* so we don't check at literally every keystroke but only after some time (5 sec) has passed
       console.log('Checking form validity!');
