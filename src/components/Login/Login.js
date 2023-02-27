@@ -12,9 +12,17 @@ const Login = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => { // use whenever you have an action that should be executed in response to some other action
-    setFormIsValid(
-      enteredEmail.includes('@') && enteredPassword.trim().length > 6 // helps to eliminate repetitive code that we use in both emailChangeHandler and passwordChangeHandler
-    );
+    const identifier = setTimeout(()=> { // *debouncing* so we don't check at literally every keystroke but only after some time (5 sec) has passed
+      console.log('Checking form validity!');
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6 // helps to eliminate repetitive code that we use in both emailChangeHandler and passwordChangeHandler
+      );
+    }, 500);
+    
+    return () => { // just a cleanup function that runs before useEffect executes again
+      console.log('CLEANUP');
+      clearTimeout(identifier); // we are essentially clearing the previous timer before we set a new one
+    };
   }, [enteredEmail, enteredPassword]);
 
   const emailChangeHandler = (event) => {
