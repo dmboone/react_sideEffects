@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import MainHeader from './components/MainHeader/MainHeader';
+import AuthContext from './store/auth-context';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,13 +29,13 @@ function App() {
   };
 
   return (
-    <React.Fragment>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+    <AuthContext.Provider value={{isLoggedIn: isLoggedIn}}> {/** we want to wrap our context around anything that we want to have access to it */}
+      <MainHeader onLogout={logoutHandler} /> {/** anything that is inside including those component's children will now have access to our auth context */}
       <main>
         {!isLoggedIn && <Login onLogin={loginHandler} />}
         {isLoggedIn && <Home onLogout={logoutHandler} />}
       </main>
-    </React.Fragment>
+    </AuthContext.Provider>
   );
 }
 
