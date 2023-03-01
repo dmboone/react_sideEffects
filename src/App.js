@@ -29,7 +29,12 @@ function App() {
   };
 
   return (
-    <AuthContext.Provider value={{isLoggedIn: isLoggedIn}}> {/** we want to wrap our context around anything that we want to have access to it */}
+    <AuthContext.Provider 
+      value={{
+        isLoggedIn: isLoggedIn,
+        onLogout: logoutHandler
+      }}
+    > {/** we want to wrap our context around anything that we want to have access to it */}
       <MainHeader onLogout={logoutHandler} /> {/** anything that is inside including those component's children will now have access to our auth context */}
       <main>
         {!isLoggedIn && <Login onLogin={loginHandler} />}
