@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useContext } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
+import AuthContext from '../../store/auth-context';
 
 // can create the reducer function outside of the component function 
 // because we don't need any data created inside of the component function
@@ -35,6 +36,8 @@ const Login = (props) => {
 
   const [emailState, dispatchEmail] = useReducer(emailReducer, {value: '', isValid: null});
   const [passwordState, dispatchPassword] = useReducer(passwordReducer, {value: '', isValid: null});
+
+  const ctx = useContext(AuthContext);
 
   useEffect(()=> { // if no dependencies given, useEffect will run everytime the component function re-runs
     console.log('EFFECT RUNNING - NO DEPENDENCIES GIVEN');
@@ -95,7 +98,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    ctx.onLogin(emailState.value, passwordState.value);
   };
 
   return (
