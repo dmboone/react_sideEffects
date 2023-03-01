@@ -56,7 +56,7 @@ const Login = (props) => {
       console.log('Checking form validity!');
       setFormIsValid(
         emailIsValid && passwordIsValid // better to check form validity here because useEffect will rerun any time our listed dependencies are updated
-      );
+      ); // could also have just put emailState.isValid and passwordState.isValid and the same thing would be achieved
     }, 500);
     
     return () => { // just a cleanup function that runs before useEffect executes again
@@ -65,6 +65,7 @@ const Login = (props) => {
     };
   }, [emailIsValid, passwordIsValid]); // using just the isValid property from our email and password better optimizes useEffect 
   // so that we are only rerunning this function if the VALIDITY of either of those variables changes, not if the states are altered at all
+  // could also have just put emailState.isValid and passwordState.isValid and the same thing would be achieved
 
   const emailChangeHandler = (event) => {
     dispatchEmail({type: 'USER_INPUT', val: event.target.value});
